@@ -9,3 +9,4 @@ set -xU EZA_CONFIG_DIR $HOME/.config/eza
 
 starship init fish | source
 zoxide init fish | source
+fzf --fish | source
