@@ -1,0 +1,22 @@
+# Replaced by starship.
+function fish_prompt --description "Write out the prompt"
+
+  set -l last_status $status
+  set -l status_color 00af00
+
+  if not test $last_status -eq 0
+    set status_color af0000
+    set_color $status_color
+    echo "✗ ($last_status)"
+  end
+
+  # PWD
+  set_color 00afff
+  printf '%s' (string replace $HOME '~' (pwd))
+  set_color normal
+
+  set_color $status_color
+  echo -n ' $ '
+  set_color normal
+
+end
