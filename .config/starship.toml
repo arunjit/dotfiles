@@ -23,7 +23,7 @@ style = 'purple'
 style = 'red'
 
 [python]
-format = '[\($virtualenv\) ]($style)'
+format = '[py\($virtualenv\) ]($style)'
 style = 'yellow'
 
 [palettes.arunjit]
