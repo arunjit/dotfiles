@@ -1,3 +1,4 @@
 .config/configstore/update-notifier-@google
+.config/nvim/lazy-lock.json
 gh
 uv
