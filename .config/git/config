@@ -1,0 +1,28 @@
+[color]
+	ui = auto
+[alias]
+	co = checkout
+	br = branch
+	cob = checkout -b
+	ci = commit
+  s = status --short
+	st = status -sb
+	cm = commit -m
+	cv = commit -v
+	cam = commit -am
+	cav = commit -av
+	mg = merge
+	rb = rebase
+	df = diff
+	dc = diff --cached
+	last = log -1 HEAD
+	un = reset HEAD --
+	graph = log --graph --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	ls = ls-files
+	l = log --oneline
+	ll = log --pretty=format:'%Cred%h%Creset %Cgreen%cr%Creset by %C(bold blue)%an%Creset: %s %C(yellow)%d%Creset' --abbrev-commit --date=relative
+	g = !git graph
+	info = status --porcelain
+	diffall = !diffall
+[core]
+	editor = nvim

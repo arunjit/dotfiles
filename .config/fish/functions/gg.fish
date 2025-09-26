@@ -1,3 +1,3 @@
-function gg --description="git status"
-  git status $argv
+function gg --description="git status -sb"
+  git status -sb
 end
