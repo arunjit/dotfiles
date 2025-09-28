@@ -1,0 +1,8 @@
+#:schema https://jj-vcs.github.io/jj/latest/config-schema.json
+
+[user]
+name = "Arunjit Singh"
+email = "arunjit@ajsd.in"
+
+[ui]
+editor = "nvim"
