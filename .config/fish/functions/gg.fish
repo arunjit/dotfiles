@@ -1,3 +1,4 @@
-function gg --description="git status -sb"
-  git status -sb
+function gg --description="git g; git s"
+  git g
+  git s
 end
