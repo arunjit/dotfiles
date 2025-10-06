@@ -7,3 +7,6 @@ email = "arunjit@ajsd.in"
 [ui]
 editor = "nvim"
 default-command = "log"
+
+[git]
+colocate = false
