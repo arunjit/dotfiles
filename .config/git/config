@@ -28,6 +28,11 @@
 	editor = nvim
 	pager = delta
 
+[include]
+	path = ~/Developer/src/delta/catppuccin.gitconfig
+
 [delta]
+	features = catppuccin-mocha
 	navigate = true
 	side-by-side = true
+
