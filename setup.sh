@@ -16,3 +16,8 @@ brew install \
 stow . --target=$HOME
 
 fish_config theme save "Catppuccin Mocha"
+
+mkdir -p $HOME/Developer/src
+cd $HOME/Developer/src
+git clone https://github.com/catppuccin/delta.git
+git clone https://github.com/junegunn/fzf-git.sh
