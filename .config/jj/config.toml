@@ -15,6 +15,7 @@ colocate = false
 
 [aliases]
 amend = ["squash"]
+tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 
 [template-aliases]
 'format_short_signature(signature)' = '"<" ++ if(signature.name(), signature.name(), label("text warning", "NO NAME")) ++ ">"'
