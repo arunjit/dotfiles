@@ -26,3 +26,8 @@
 	diffall = !diffall
 [core]
 	editor = nvim
+	pager = delta
+
+[delta]
+	navigate = true
+	side-by-side = true
