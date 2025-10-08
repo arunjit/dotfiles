@@ -1,7 +1,7 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "$python$directory$git_branch$git_status$character"
+format = "$python$directory$git_branch$git_status${custom.jj}$character"
 add_newline = false
 follow_symlinks = false
 palette = 'catppuccin_mocha'
@@ -25,6 +25,19 @@ style = 'red'
 [python]
 format = '[py\($virtualenv\) ]($style)'
 style = 'yellow'
+
+[custom.jj]
+description = "jj repo state"
+when = "jj workspace root --ignore-working-copy"
+format = "[](fg:separator) $output "
+command = '''
+jj log --revisions @ --color always --no-graph --limit 1 --template '
+  separate(" ",
+    bookmarks,
+    if(empty, "", raw_escape_sequence("\x1b[1;31m") ++ "(±)"),
+  )
+'
+'''
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
