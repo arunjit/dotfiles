@@ -13,7 +13,15 @@ brew install \
   bat eza fd fzf jj neovim starship stow zoxide \
   direnv gh jq jqp lua luajit ripgrep tlrc xq yazi yq
 
-stow . --target=$HOME
+# Keep the .config dir explicit, so that it can hold untracked configs.
+mkdir $HOME/.config
+
+# Right now, all contents of config/ can be moved to the root of this dir.
+# However, to keep the option of top-level dotfiles (e.g, ~/.foorc), everything
+# that goes under ~/.config gets put under config.
+stow config --target=$HOME/.config --dotfiles
+# For example, for top-level dotfiles, put them under a new dir, e.g foo/dot-foorc:
+# stow foo --target=$HOME --dotfiles
 
 fish_config theme save "Catppuccin Mocha"
 
