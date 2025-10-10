@@ -35,7 +35,7 @@
 	pager = delta
 
 [include]
-	path = ~/Developer/src/delta/catppuccin.gitconfig
+	path = ~/Developer/src/catppuccin-delta/catppuccin.gitconfig
 
 [delta]
 	features = catppuccin-mocha

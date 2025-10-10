@@ -24,8 +24,9 @@ stow config --target=$HOME/.config --dotfiles
 # stow foo --target=$HOME --dotfiles
 
 fish_config theme save "Catppuccin Mocha"
+bat cache --build
 
 mkdir -p $HOME/Developer/src
 cd $HOME/Developer/src
-git clone https://github.com/catppuccin/delta.git
-git clone https://github.com/junegunn/fzf-git.sh
+git clone https://github.com/catppuccin/delta.git catppucin-delta
+git clone https://github.com/junegunn/fzf-git.sh fzf-git
