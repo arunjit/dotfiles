@@ -10,8 +10,8 @@ which git > /dev/null || (echo "Go install Git-SCM (brew install git)" && exit 1
 set +x
 
 brew install \
-  bat eza fd fzf jj neovim starship stow zoxide \
-  direnv gh jq jqp lua luajit ripgrep tlrc xq yazi yq
+  bat eza fd fzf git-delta jj neovim starship stow zoxide \
+  direnv gh jq jqp lua luajit luarocks ripgrep tlrc xq yazi yq
 
 # Keep the .config dir explicit, so that it can hold untracked configs.
 mkdir $HOME/.config
@@ -24,9 +24,13 @@ stow config --target=$HOME/.config --dotfiles
 # stow foo --target=$HOME --dotfiles
 
 fish_config theme save "Catppuccin Mocha"
+fish_add_path /opt/homebrew/bin
 bat cache --build
 
 mkdir -p $HOME/Developer/src
 cd $HOME/Developer/src
 git clone https://github.com/catppuccin/delta.git catppucin-delta
 git clone https://github.com/junegunn/fzf-git.sh fzf-git
+
+# Reload everything.
+fish source $HOME/.config/fish/config.fish
