@@ -1,6 +1,8 @@
 # Setup PATH
 set -x PATH /opt/homebrew/bin $HOME/.cargo/bin $HOME/Developer/bin $PATH
 
+fish_add_path /opt/homebrew/bin
+
 # Setup terminal, and turn on colors
 # set -xU TERM xterm-256color
 set -xU CLICOLOR 1
