@@ -29,7 +29,7 @@ bat cache --build
 
 mkdir -p $HOME/Developer/src
 cd $HOME/Developer/src
-git clone https://github.com/catppuccin/delta.git catppucin-delta
+git clone https://github.com/catppuccin/delta.git catppuccin-delta
 git clone https://github.com/junegunn/fzf-git.sh fzf-git
 
 # Reload everything.
