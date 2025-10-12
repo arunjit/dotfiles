@@ -33,6 +33,7 @@
 [core]
 	editor = nvim
 	pager = delta
+	excludesfile = ~/.config/git/ignore
 
 [include]
 	path = ~/Developer/src/catppuccin-delta/catppuccin.gitconfig
