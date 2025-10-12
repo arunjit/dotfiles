@@ -9,10 +9,10 @@ set -xU CLICOLOR 1
 
 set -xU EZA_CONFIG_DIR $HOME/.config/eza
 
-starship init fish | source
-zoxide init fish | source
 fzf --fish | source
 jj util completion fish | source
+starship init fish | source
+zoxide init fish | source
 
 set -xU FZF_CTRL_T_OPTS "--preview 'bat -n --color=always --line-range=:500 {}'"
 set -xU FZF_ALT_C_OPTS "--preview 'eza --tree --color=always {} | head -200'"
