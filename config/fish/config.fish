@@ -1,5 +1,5 @@
 # Setup PATH
-set -x PATH /opt/homebrew/bin $HOME/.cargo/bin $HOME/Developer/bin $PATH
+set -x PATH /opt/homebrew/opt/rustup/bin /opt/homebrew/bin $HOME/.cargo/bin $HOME/Developer/bin $PATH
 
 fish_add_path /opt/homebrew/bin
 
