@@ -17,5 +17,15 @@ config.window_padding = {
   bottom = 0,
   left = 0,
 }
+config.native_macos_fullscreen_mode = true
+
+-- Key bindings
+config.keys = {
+  {
+    key = 'Enter',
+    mods = 'CMD',
+    action = wezterm.action.ToggleFullScreen,
+  },
+}
 
 return config
