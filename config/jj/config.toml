@@ -5,7 +5,7 @@ name = "arunjit"
 email = "arunjit@ajsd.in"
 
 [ui]
-editor = "nvim"
+editor = "hx"
 default-command = "log"
 pager = ["delta", "--side-by-side"]
 diff-formatter = ":git"

@@ -3,6 +3,8 @@ set -x PATH /opt/homebrew/opt/rustup/bin /opt/homebrew/bin $HOME/.cargo/bin $HOM
 
 fish_add_path /opt/homebrew/bin
 
+set -xU EDITOR hx
+
 # Setup terminal, and turn on colors
 # set -xU TERM xterm-256color
 set -xU CLICOLOR 1

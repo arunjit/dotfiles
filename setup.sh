@@ -10,7 +10,7 @@ which git > /dev/null || (echo "Go install Git-SCM (brew install git)" && exit 1
 set +x
 
 brew install \
-  bat eza fd fzf git-delta jj neovim starship stow zoxide \
+  bat eza fd fzf git-delta helix jj starship stow zoxide \
   direnv gh jq jqp lua luajit luarocks ripgrep tlrc xq yazi yq
 
 # Keep the .config dir explicit, so that it can hold untracked configs.
