@@ -1,9 +1,13 @@
 # Setup PATH
 set -x PATH /opt/homebrew/opt/rustup/bin /opt/homebrew/bin $HOME/.cargo/bin $HOME/Developer/bin $PATH
 
-fish_add_path /opt/homebrew/bin
-
 set -xU EDITOR hx
+
+set -xU GOPATH $HOME/Developer
+
+# Embedded Rust for ESP32
+set -xU LIBCLANG_PATH "$HOME/.rustup/toolchains/esp/xtensa-esp32-elf-clang/esp-20.1.1_20250829/esp-clang/lib"
+fish_add_path $HOME/.rustup/toolchains/esp/xtensa-esp-elf/esp-15.2.0_20250920/xtensa-esp-elf/bin
 
 # Setup terminal, and turn on colors
 # set -xU TERM xterm-256color
