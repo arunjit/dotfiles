@@ -22,6 +22,7 @@ mkdir $HOME/.config
 stow config --target=$HOME/.config --dotfiles
 # For example, for top-level dotfiles, put them under a new dir, e.g foo/dot-foorc:
 # stow foo --target=$HOME --dotfiles
+stow jj --target=$HOME --dotfiles
 
 fish_config theme save "Catppuccin Mocha"
 fish_add_path /opt/homebrew/bin
