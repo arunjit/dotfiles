@@ -1,7 +1,7 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "$python$directory$git_branch$git_status${custom.jj}$character"
+format = "$directory${custom.jj}$character"
 add_newline = false
 follow_symlinks = false
 palette = 'catppuccin_mocha'
