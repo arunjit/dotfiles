@@ -36,7 +36,7 @@
 	excludesfile = ~/.config/git/ignore
 
 [include]
-	path = ~/Developer/src/catppuccin-delta/catppuccin.gitconfig
+	path = ~/Developer/extsrc/catppuccin-delta/catppuccin.gitconfig
 
 [delta]
 	features = catppuccin-mocha

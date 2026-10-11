@@ -28,8 +28,8 @@ fish_config theme save "Catppuccin Mocha"
 fish_add_path /opt/homebrew/bin
 bat cache --build
 
-mkdir -p $HOME/Developer/src
-cd $HOME/Developer/src
+mkdir -p $HOME/Developer/extsrc
+cd $HOME/Developer/extsrc
 git clone https://github.com/catppuccin/delta.git catppuccin-delta
 git clone https://github.com/junegunn/fzf-git.sh fzf-git
 

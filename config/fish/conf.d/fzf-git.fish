@@ -1,1 +1,1 @@
-source "$HOME/Developer/src/fzf-git/fzf-git.fish"
+source "$HOME/Developer/extsrc/fzf-git/fzf-git.fish"
