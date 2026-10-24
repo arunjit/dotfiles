@@ -34,3 +34,15 @@ label("node",
   )
 )
 '''
+
+[fix.tools.ruff-format]
+command = ["ruff", "format", "--stdin-filename=$path", "-"]
+patterns = ["glob:'**/*.py'"]
+
+[fix.tools.clang-format]
+command = ["clang-format", "--sort-includes", "--assume-filename=$path"]
+patterns = ["glob:'**/*.c'", "glob:'**/*.h'"]
+
+[fix.tools.mdformat]
+command = ["mdformat", "-"]
+patterns = ["glob:'**/*.md'"]
