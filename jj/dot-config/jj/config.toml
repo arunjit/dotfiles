@@ -40,8 +40,25 @@ command = ["ruff", "format", "--stdin-filename=$path", "-"]
 patterns = ["glob:'**/*.py'"]
 
 [fix.tools.clang-format]
-command = ["clang-format", "--sort-includes", "--assume-filename=$path"]
-patterns = ["glob:'**/*.c'", "glob:'**/*.h'"]
+command = [
+  "clang-format",
+  "-style=Google",
+  "--sort-includes",
+  "--assume-filename=$path",
+]
+patterns = [
+  "glob:'**/*.c'",
+  "glob:'**/*.cc'",
+  "glob:'**/*.cpp'",
+  "glob:'**/*.cxx'",
+  "glob:'**/*.h'",
+  "glob:'**/*.hh'",
+  "glob:'**/*.hpp'",
+]
+
+[fix.tools.rustfmt]
+command = ["rustfmt", "--emit=stdout"]
+patterns = ["glob:'**/*.rs'"]
 
 [fix.tools.mdformat]
 command = ["mdformat", "-"]
