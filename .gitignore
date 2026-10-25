@@ -1,3 +1,25 @@
-config/nvim/lazy-lock.json
-config/fish/fish_variables
+.DS_Store
+*.swp
+*~
+
+# Fish universal variables & local overrides
+fish_variables
+local.fish
+conf.d/local.fish
+fish_frozen_theme.fish
+
+# Neovim lockfile
+lazy-lock.json
+
+# Herdr runtime state
+.plugins.lock
+**/sessions/
+sessions/
+
+# Jujutsu runtime metadata cache
+**/repos/
+repos/
+**/workspaces/
+workspaces/
+
 .jj

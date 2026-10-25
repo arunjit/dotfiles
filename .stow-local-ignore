@@ -16,6 +16,7 @@ _darcs
 \.gitmodules
 
 \.jj
+\.DS_Store
 
 .+~          # emacs backup files
 \#.*\#       # emacs autosave files
@@ -25,3 +26,5 @@ _darcs
 ^/COPYING
 
 setup.sh
+scripts/.*
+scripts$
