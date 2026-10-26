@@ -33,15 +33,15 @@ set -gx FZF_DEFAULT_OPTS "\
 --color=border:#6C7086,label:#CDD6F4"
 
 # Embedded Rust for ESP32 (only active if toolchain is present)
-if test -d "$HOME/.rustup/toolchains/esp"
-    set -l esp_clang (find "$HOME/.rustup/toolchains/esp" -name "libclang.dylib" -o -name "libclang.so" 2>/dev/null | head -n 1)
-    if test -n "$esp_clang"
-        set -gx LIBCLANG_PATH (dirname "$esp_clang")
-    end
-    for esp_bin in (find "$HOME/.rustup/toolchains/esp" -type d -name "bin" 2>/dev/null)
-        fish_add_path $esp_bin
-    end
-end
+# if test -d "$HOME/.rustup/toolchains/esp"
+#     set -l esp_clang (find "$HOME/.rustup/toolchains/esp" -name "libclang.dylib" -o -name "libclang.so" 2>/dev/null | head -n 1)
+#     if test -n "$esp_clang"
+#         set -gx LIBCLANG_PATH (dirname "$esp_clang")
+#     end
+#     for esp_bin in (find "$HOME/.rustup/toolchains/esp" -type d -name "bin" 2>/dev/null)
+#         fish_add_path $esp_bin
+#     end
+# end
 
 # Dynamic tool integrations (guarded so missing tools do not error)
 if status is-interactive
