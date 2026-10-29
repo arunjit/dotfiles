@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/) and [Jujutsu (`jj`)](https://github.com/jj-vcs/jj), configured with a unified **Catppuccin Mocha** dark theme across macOS and Linux (including Raspberry Pi OS Lite).
+Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/) and [Jujutsu (`jj`)](https://github.com/jj-vcs/jj), configured for **Fish shell** with a unified **Catppuccin Mocha** dark theme across macOS and Linux (including Raspberry Pi OS Lite).
 
 ---
 
@@ -10,7 +10,7 @@ Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/) an
 
 On any fresh system (macOS or Linux / Raspberry Pi OS Lite), bootstrap your environment with a single command:
 
-```bash
+```sh
 curl -fsSL https://raw.githubusercontent.com/arunjit/dotfiles/main/setup.sh | sh
 ```
 
@@ -20,14 +20,31 @@ The script is self-contained and automatically:
 3. Installs package dependencies (Homebrew on macOS; `apt` and standalone release binaries on Linux).
 4. Stows configurations safely into `~/.config` with interactive prompts for any conflicts.
 5. Builds the syntax highlighting cache (`bat`) and applies themes.
+6. Registers Fish in `/etc/shells` and prints the command to set it as default.
 
 You can also pass flags directly through the pipe:
-```bash
+```sh
 # Preview actions without installing packages or touching files:
 curl -fsSL https://raw.githubusercontent.com/arunjit/dotfiles/main/setup.sh | sh -s -- --dry-run
 
 # Link only headless core tools on a server / Raspberry Pi:
 curl -fsSL https://raw.githubusercontent.com/arunjit/dotfiles/main/setup.sh | sh -s -- --core-only
+```
+
+---
+
+### Setting Fish as Default Shell
+
+Fish is configured as your primary shell. To set it as your default login shell, run:
+
+```sh
+chsh -s "$(which fish)"
+```
+
+Or to enter Fish immediately in the current terminal:
+
+```sh
+fish
 ```
 
 ---
@@ -39,17 +56,17 @@ If you prefer to clone and inspect the repository before running the installer:
 #### 1. Prerequisites
 
 * **Raspberry Pi OS Lite (or minimal Debian / Ubuntu):**
-  ```bash
+  ```sh
   sudo apt update && sudo apt install -y git curl
   ```
 * **macOS:**
-  ```bash
+  ```sh
   xcode-select --install
   ```
 
 #### 2. Clone the Repository
 
-```bash
+```sh
 git clone https://github.com/arunjit/dotfiles.git ~/Developer/dotfiles
 cd ~/Developer/dotfiles
 ```
@@ -58,7 +75,7 @@ cd ~/Developer/dotfiles
 
 #### 3. Run Setup
 
-```bash
+```sh
 ./setup.sh
 ```
 
@@ -66,7 +83,7 @@ cd ~/Developer/dotfiles
 
 Jujutsu uses Git as its underlying repository store, so `git` is installed and verified first. Once `setup.sh` finishes installing Jujutsu, if you cloned with Git, you can initialize Jujutsu on the repository (non-colocated):
 
-```bash
+```sh
 jj git init --no-colocate
 ```
 
@@ -98,7 +115,7 @@ The setup script guarantees **zero accidental overwriting** of existing unmanage
 
 #### Dry Run Example
 
-```bash
+```sh
 ./setup.sh --dry-run
 ```
 
@@ -106,7 +123,7 @@ The setup script guarantees **zero accidental overwriting** of existing unmanage
 
 You can also stow individual packages or run the stow step independently:
 
-```bash
+```sh
 # Stow all configurations without package installation
 ./setup.sh --stow-only
 
@@ -127,7 +144,7 @@ All packages follow a modular Stow layout (`<tool>/dot-config/<tool>/...`), mapp
 | **`fish`** | Primary shell configured with Catppuccin Mocha, guarded completions, dynamic `PATH` management via `fish_add_path`, and Mac muscle-memory compatibility on Linux. |
 | **`git`** | Git config with side-by-side `delta` diffs and a vendored Catppuccin Mocha theme. |
 | **`jj`** | [Jujutsu](https://github.com/jj-vcs/jj) configuration with custom log graph styling, side-by-side delta pager, and auto-formatting fixers (`ruff`, `clang-format`, `rustfmt`, `mdformat`). |
-| **`starship`** | Fast, cross-shell prompt configured via `~/.config/starship.toml`. |
+| **`starship`** | Fast prompt configured for Fish via `~/.config/starship.toml` (integrations are pre-configured in `config.fish`). |
 | **`helix`** | Minimalist modal editor with Catppuccin Mocha theme and cursor shape preferences. |
 | **`nvim`** | Neovim setup bootstrapped with `lazy.nvim` and Catppuccin color scheme. |
 | **`herdr`** | Terminal workspace & agent orchestrator with custom keybindings and Catppuccin styling. |

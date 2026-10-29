@@ -289,9 +289,11 @@ if [ "$RUN_PACKAGES" -eq 1 ]; then
       # 3.2 Starship
       if ! command -v starship >/dev/null 2>&1 && [ ! -x "$BIN_DIR/starship" ]; then
         log_info "Installing Starship prompt..."
-        if ! curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$BIN_DIR" 2>/dev/null; then
+        if ! curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$BIN_DIR" >/dev/null 2>&1; then
           log_warn "Starship install failed. Can be retried by re-running setup.sh."
           record_failure "starship"
+        else
+          log_info "Starship prompt installed (Fish integration is already included in dotfiles)."
         fi
       fi
 
@@ -606,6 +608,18 @@ if [ "$DRY_RUN" -eq 0 ]; then
   if command -v fish >/dev/null 2>&1; then
     fish -c 'fish_config theme save "Catppuccin Mocha" >/dev/null 2>&1 || true'
   fi
+
+  # Ensure fish is registered in /etc/shells so chsh succeeds without error
+  FISH_BIN="$(command -v fish 2>/dev/null || true)"
+  if [ -n "$FISH_BIN" ] && [ -r /etc/shells ]; then
+    if ! grep -Fxq "$FISH_BIN" /etc/shells 2>/dev/null; then
+      if [ -w /etc/shells ]; then
+        echo "$FISH_BIN" >> /etc/shells
+      elif command -v sudo >/dev/null 2>&1; then
+        echo "$FISH_BIN" | sudo tee -a /etc/shells >/dev/null 2>&1 || true
+      fi
+    fi
+  fi
 fi
 
 # ------------------------------------------------------------------------------
@@ -626,5 +640,23 @@ elif [ -n "$FAILED_STEPS" ] || [ -n "$STOW_FAILURES" ]; then
   echo "  be automatically skipped and remaining tasks resumed."
 else
   echo "Dotfiles setup completed successfully!"
+fi
+
+# Default shell recommendation
+if [ "$DRY_RUN" -eq 0 ]; then
+  FISH_BIN="$(command -v fish 2>/dev/null || echo "fish")"
+  CURRENT_SHELL="$(basename "${SHELL:-}")"
+  echo ""
+  echo "Default Shell:"
+  if [ "$CURRENT_SHELL" = "fish" ]; then
+    echo "  Fish is already your default shell."
+  else
+    echo "  Fish is configured as your primary shell."
+    echo "  To set Fish as your default login shell, run:"
+    echo "    chsh -s \"$FISH_BIN\""
+    echo ""
+    echo "  To launch Fish immediately in this session, run:"
+    echo "    fish"
+  fi
 fi
 echo "============================================="
