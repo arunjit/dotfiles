@@ -19,7 +19,6 @@ style = 'green'
 ssh_only = true
 format = '[\[$hostname\]](flamingo) '
 trim_at = ''
-aliases = { "raspberrypi.local" = "rpi" }
 
 [git_branch]
 format = '[$symbol$branch(:$remote_branch)]($style) '
