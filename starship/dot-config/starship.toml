@@ -1,7 +1,7 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "$directory${custom.jj}$character"
+format = "$hostname$directory${custom.jj}$character"
 add_newline = false
 follow_symlinks = false
 palette = 'catppuccin_mocha'
@@ -14,6 +14,12 @@ error_symbol = "[➜](bold red)"
 truncate_to_repo = false
 truncation_length = 0
 style = 'green'
+
+[hostname]
+ssh_only = true
+format = '[\[$hostname\]](flamingo) '
+trim_at = ''
+aliases = { "raspberrypi.local" = "rpi" }
 
 [git_branch]
 format = '[$symbol$branch(:$remote_branch)]($style) '
