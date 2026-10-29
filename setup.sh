@@ -225,12 +225,20 @@ log_step "Target dotfiles repository: $DOTFILES_DIR"
 
   if [ ! -d "$DOTFILES_DIR/fish/dot-config" ]; then
     ensure_git || exit 1
-    log_info "Cloning $DOTFILES_REPO_URL to $DOTFILES_DIR..."
     mkdir -p "$(dirname "$DOTFILES_DIR")"
-    if ! git clone "$DOTFILES_REPO_URL" "$DOTFILES_DIR"; then
-      log_error "Failed to clone dotfiles repository."
-      log_warn "To resume, check your internet connection and re-run setup.sh."
-      exit 1
+    if command -v jj >/dev/null 2>&1; then
+      log_info "Cloning $DOTFILES_REPO_URL to $DOTFILES_DIR via jj (--no-colocate)..."
+      if ! jj git clone --no-colocate "$DOTFILES_REPO_URL" "$DOTFILES_DIR"; then
+        log_error "Failed to clone dotfiles repository via jj."
+        exit 1
+      fi
+    else
+      log_info "Cloning $DOTFILES_REPO_URL to $DOTFILES_DIR..."
+      if ! git clone "$DOTFILES_REPO_URL" "$DOTFILES_DIR"; then
+        log_error "Failed to clone dotfiles repository."
+        log_warn "To resume, check your internet connection and re-run setup.sh."
+        exit 1
+      fi
     fi
   fi
 
@@ -634,13 +642,18 @@ if [ "$DRY_RUN" -eq 0 ]; then
     batcat cache --build >/dev/null 2>&1 || true
   fi
 
-  # Automatically initialize Jujutsu (--no-colocate) if repository was cloned via Git
+  # Automatically convert Git repository to non-colocated Jujutsu repository
   JJ_BIN="$(command -v jj 2>/dev/null || true)"
   [ -z "$JJ_BIN" ] && [ -x "$HOME/.local/bin/jj" ] && JJ_BIN="$HOME/.local/bin/jj"
   if [ -n "$JJ_BIN" ] && [ -d "$DOTFILES_DIR/.git" ] && [ ! -d "$DOTFILES_DIR/.jj" ]; then
-    log_info "Initializing Jujutsu repository on $DOTFILES_DIR (--no-colocate)..."
-    if (cd "$DOTFILES_DIR" && "$JJ_BIN" git init --no-colocate >/dev/null 2>&1); then
-      log_info "Repository successfully initialized with Jujutsu (--no-colocate)."
+    log_info "Converting Git clone to non-colocated Jujutsu repository..."
+    if (
+      cd "$DOTFILES_DIR" && \
+      "$JJ_BIN" git init --colocate >/dev/null 2>&1 && \
+      mv .git .jj/repo/store/git && \
+      printf "git" > .jj/repo/store/git_target
+    ); then
+      log_info "Repository successfully converted to Jujutsu (--no-colocate)."
     else
       log_warn "Jujutsu automatic initialization skipped or returned non-zero."
     fi

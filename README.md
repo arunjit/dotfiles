@@ -83,12 +83,16 @@ cd ~/Developer/dotfiles
 ./setup.sh
 ```
 
-#### 4. Initialize Jujutsu (Optional)
+#### 4. Jujutsu Initialization
 
-Jujutsu uses Git as its underlying repository store, so `git` is installed and verified first. Once `setup.sh` finishes installing Jujutsu, if you cloned with Git, you can initialize Jujutsu on the repository (non-colocated):
+`setup.sh` automatically converts the cloned repository into a non-colocated Jujutsu repository as soon as `jj` is installed.
+
+If you ever need to manually convert an existing Git clone to a non-colocated Jujutsu repository:
 
 ```sh
-jj git init --no-colocate
+jj git init --colocate
+mv .git .jj/repo/store/git
+printf "git" > .jj/repo/store/git_target
 ```
 
 ---
