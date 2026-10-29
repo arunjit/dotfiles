@@ -233,7 +233,6 @@ log_step "Target dotfiles repository: $DOTFILES_DIR"
       exit 1
     fi
   fi
-fi
 
 # ------------------------------------------------------------------------------
 # 3. Package Installation
