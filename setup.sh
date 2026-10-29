@@ -47,40 +47,58 @@ record_failure() {
   FAILED_STEPS="${FAILED_STEPS:+${FAILED_STEPS}, }${_step}"
 }
 
+DOTFILES_DIR_ARG=""
+
 # ------------------------------------------------------------------------------
 # 1. Argument Parsing
 # ------------------------------------------------------------------------------
-for arg in "$@"; do
-  case "$arg" in
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -d|--dir)
+      DOTFILES_DIR_ARG="$2"
+      shift 2
+      ;;
+    --dir=*)
+      DOTFILES_DIR_ARG="${1#*=}"
+      shift
+      ;;
     -n|--dry-run|--simulate)
       DRY_RUN=1
       RUN_PACKAGES=0
+      shift
       ;;
     --force|-f)
       FORCE=1
       INTERACTIVE=0
+      shift
       ;;
     --interactive|-i)
       INTERACTIVE=1
       FORCE=0
+      shift
       ;;
     --non-interactive|--batch)
       INTERACTIVE=0
+      shift
       ;;
     --stow-only)
       RUN_PACKAGES=0
+      shift
       ;;
     --packages-only)
       RUN_STOW=0
+      shift
       ;;
     --core-only)
       CORE_ONLY=1
+      shift
       ;;
     -h|--help)
       cat <<EOF
 Usage: ./setup.sh [OPTIONS]
 
 Options:
+  -d, --dir <path>       Target directory for dotfiles clone (default: ~/Developer/dotfiles)
   -n, --dry-run          Simulate operations without modifying files or installing packages
   -i, --interactive      Prompt before replacing any existing unmanaged config (default)
   -f, --force            Force-update packages (backs up existing directories/files automatically)
@@ -92,6 +110,7 @@ Options:
 
 Remote Bootstrap:
   curl -fsSL https://raw.githubusercontent.com/arunjit/dotfiles/main/setup.sh | sh
+  curl -fsSL https://raw.githubusercontent.com/arunjit/dotfiles/main/setup.sh | sh -s -- --dir ~/.dotfiles
 
 Resuming:
   This script is fully idempotent. If interrupted or if a step fails, re-running
@@ -100,7 +119,7 @@ EOF
       exit 0
       ;;
     *)
-      log_error "Unknown option: $arg"
+      log_error "Unknown option: $1"
       exit 1
       ;;
   esac
@@ -165,13 +184,25 @@ ensure_git() {
 # ------------------------------------------------------------------------------
 # 2. Resolve, Clone, or Repair Repository
 # ------------------------------------------------------------------------------
-SCRIPT_DIR="$(cd "$(dirname "$0" 2>/dev/null || pwd)" 2>/dev/null && pwd || pwd)"
-if [ -d "$SCRIPT_DIR/fish/dot-config" ] && [ -d "$SCRIPT_DIR/git/dot-config" ]; then
-  DOTFILES_DIR="$SCRIPT_DIR"
-  log_info "Using local repository at $DOTFILES_DIR"
+if [ -n "$DOTFILES_DIR_ARG" ]; then
+  DOTFILES_DIR="$DOTFILES_DIR_ARG"
 else
-  DOTFILES_DIR="${DOTFILES_DIR:-$HOME/Developer/dotfiles}"
-  log_step "Checking dotfiles repository at $DOTFILES_DIR..."
+  SCRIPT_DIR="$(cd "$(dirname "$0" 2>/dev/null || pwd)" 2>/dev/null && pwd || pwd)"
+  if [ -d "$SCRIPT_DIR/fish/dot-config" ] && [ -d "$SCRIPT_DIR/git/dot-config" ]; then
+    DOTFILES_DIR="$SCRIPT_DIR"
+    log_info "Using local repository at $DOTFILES_DIR"
+  else
+    DOTFILES_DIR="${DOTFILES_DIR:-$HOME/Developer/dotfiles}"
+  fi
+fi
+
+# Expand tilde in DOTFILES_DIR if present
+case "$DOTFILES_DIR" in
+  "~"/*) DOTFILES_DIR="$HOME/${DOTFILES_DIR#\~/}" ;;
+  "~")   DOTFILES_DIR="$HOME" ;;
+esac
+
+log_step "Target dotfiles repository: $DOTFILES_DIR"
 
   # Resumption / Repair check for incomplete or broken clone
   if [ -d "$DOTFILES_DIR" ] && [ ! -d "$DOTFILES_DIR/fish/dot-config" ]; then
@@ -602,6 +633,18 @@ if [ "$DRY_RUN" -eq 0 ]; then
   elif command -v batcat >/dev/null 2>&1; then
     log_info "Building batcat cache..."
     batcat cache --build >/dev/null 2>&1 || true
+  fi
+
+  # Automatically initialize Jujutsu (--no-colocate) if repository was cloned via Git
+  JJ_BIN="$(command -v jj 2>/dev/null || true)"
+  [ -z "$JJ_BIN" ] && [ -x "$HOME/.local/bin/jj" ] && JJ_BIN="$HOME/.local/bin/jj"
+  if [ -n "$JJ_BIN" ] && [ -d "$DOTFILES_DIR/.git" ] && [ ! -d "$DOTFILES_DIR/.jj" ]; then
+    log_info "Initializing Jujutsu repository on $DOTFILES_DIR (--no-colocate)..."
+    if (cd "$DOTFILES_DIR" && "$JJ_BIN" git init --no-colocate >/dev/null 2>&1); then
+      log_info "Repository successfully initialized with Jujutsu (--no-colocate)."
+    else
+      log_warn "Jujutsu automatic initialization skipped or returned non-zero."
+    fi
   fi
 
   # Set fish theme

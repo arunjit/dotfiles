@@ -16,14 +16,18 @@ curl -fsSL https://raw.githubusercontent.com/arunjit/dotfiles/main/setup.sh | sh
 
 The script is self-contained and automatically:
 1. Installs minimal prerequisites (`git`, `curl`) if not present.
-2. Clones this repository to `~/Developer/dotfiles` (if not already cloned).
+2. Clones this repository (default: `~/Developer/dotfiles`, configurable via `--dir`).
 3. Installs package dependencies (Homebrew on macOS; `apt` and standalone release binaries on Linux).
-4. Stows configurations safely into `~/.config` with interactive prompts for any conflicts.
-5. Builds the syntax highlighting cache (`bat`) and applies themes.
-6. Registers Fish in `/etc/shells` and prints the command to set it as default.
+4. Initializes [Jujutsu (`jj`)](https://github.com/jj-vcs/jj) on the repository (`--no-colocate`).
+5. Stows configurations safely into `~/.config` with interactive prompts for any conflicts.
+6. Builds the syntax highlighting cache (`bat`) and applies themes.
+7. Registers Fish in `/etc/shells` and prints the command to set it as default.
 
 You can also pass flags directly through the pipe:
 ```sh
+# Clone to a custom directory (e.g. ~/.dotfiles):
+curl -fsSL https://raw.githubusercontent.com/arunjit/dotfiles/main/setup.sh | sh -s -- --dir ~/.dotfiles
+
 # Preview actions without installing packages or touching files:
 curl -fsSL https://raw.githubusercontent.com/arunjit/dotfiles/main/setup.sh | sh -s -- --dry-run
 
