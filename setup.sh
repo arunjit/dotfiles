@@ -271,7 +271,7 @@ if [ "$RUN_PACKAGES" -eq 1 ]; then
         MAC_PACKAGES="
           bat direnv eza fd fish fzf gh git git-delta
           helix jj jq jqp lua luajit luarocks ripgrep
-          starship stow tlrc xq yazi yq zoxide
+          platformio starship stow tlrc xq yazi yq zoxide
         "
         # shellcheck disable=SC2086
         if ! brew install $MAC_PACKAGES; then
