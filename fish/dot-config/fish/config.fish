@@ -1,9 +1,9 @@
 # Setup PATH using fish_add_path (safely handles existence and prepends without duplicates)
 fish_add_path --prepend --global \
     $HOME/Developer/bin \
-    $HOME/.platformio/penv/bin \
     $HOME/.local/bin \
     $HOME/.cargo/bin \
+    $HOME/.platformio/penv/bin \
     /opt/homebrew/bin \
     /opt/homebrew/sbin \
     /opt/homebrew/opt/rustup/bin \
